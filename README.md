@@ -1,33 +1,45 @@
-# 📚 Sistema de Gestión de Préstamos de Biblioteca
+# 📚 Sistema de Préstamo de Libros en Java (POO)
 
-Un sistema orientado a objetos desarrollado en Java que simula la gestión de préstamos de libros dentro de una biblioteca, controlando la disponibilidad de los ejemplares e imprimiendo un comprobante cuando el préstamo es exitoso.
-
----
-
-## 🏗️ Arquitectura y Clases
-
-El proyecto está diseñado bajo los principios de la **Programación Orientada a Objetos (POO)** y se compone de las siguientes clases principales:
-
-*   **`Libro`**: Representa un libro con sus atributos esenciales (`titulo`, `autor` y el estado del libro `disponibilidad`).
-*   **`Socio`**: Representa al usuario que solicita el libro, registrando su `nombre` y `numeroSocio`.
-*   **`ComprobantePrestamo`**: Genera e imprime el resumen con los datos del socio y del libro cuando una transacción se concreta de manera correcta.
-*   **`Biblioteca`**: Contiene la lógica de negocio principal para procesar préstamos. Verifica la disponibilidad del libro y actualiza su estado si está disponible.
-*   **`Main`**: Punto de entrada de la aplicación donde se instancian los objetos y se simulan diferentes casos de uso.
+Este proyecto es una simulación sencilla de un sistema de biblioteca implementado en Java. Su objetivo es poner en práctica los conceptos fundamentales de la **Programación Orientada a Objetos (POO)** mediante la interacción de objetos en memoria (sin uso de bases de datos ni persistencia).
 
 ---
 
-## 🔄 Flujo de Funcionamiento
+## 🧩 Clases y Modelado de Objetos
+
+El sistema modela el dominio del problema dividiendo las responsabilidades en 5 clases:
+
+*   **`Libro`**: Clase entidad que almacena la información del libro (`titulo`, `autor`) y mantiene el estado de su disponibilidad (`disponibilidad`).
+*   **`Socio`**: Clase entidad que almacena los datos básicos del usuario (`nombre`, `numeroSocio`).
+*   **`Biblioteca`**: Contiene la **lógica de negocio**. Recibe los objetos `Libro` y `Socio` para verificar el estado de disponibilidad y realizar la transacción.
+*   **`ComprobantePrestamo`**: Clase encargada de asociar un libro con un socio e imprimir el resumen del préstamo si este fue exitoso.
+*   **`Main`**: Clase ejecutable para probar la instanciación de objetos y la lógica del programa.
+
+---
+
+## ⚙️ Lógica de Control de Estado
+
+El flujo del programa demuestra cómo los objetos cambian su estado interno en tiempo de ejecución:
+
+1. **Préstamo Exitoso:** Si `libro.disponibilidad` es `true`:
+   * Se muta el atributo del objeto a `false`.
+   * Se crea e instancia un nuevo objeto `ComprobantePrestamo`.
+2. **Préstamo Fallido:** Si `libro.disponibilidad` es `false`:
+   * Se imprime un mensaje de error por consola.
+   * La función retorna `null` para indicar que no se pudo generar el comprobante.
+
+---
+
+## 💻 Ejemplo de Ejecución
+
+Resultado por consola al ejecutar el método `main`:
 
 ```text
-[Inicio: Solicitud de Préstamo]
-             │
-             ▼
-   ¿Libro disponible?
-    /               \
- (Sí)               (No)
-  │                   │
-  ├── Cambia estado   └── Muestra: "Préstamo no disponible"
-  │   a no disponible     Retorna `null`
-  │
-  └── Genera e imprime
-      `ComprobantePrestamo`
+=============== Prestamo 1 ===============
+Prestamo exitoso
+Socio: Alex
+Número de socio: 1
+Libro: El Principito
+Autor: Antoine de Saint-Exupery
+=============== Prestamo 2 ===============
+Prestamo no disponible
+No se pudo realizar el comprobante pestamo
